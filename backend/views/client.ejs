@@ -1,0 +1,78 @@
+<%- layout('template') %>
+    <title>Client | <%= client.firstName %></title>
+</head>
+<body class="d-flex flex-column min-vh-100">
+   <div class="hero-bar pt-5 px-3">
+    <h1 class="mb-2"><%= client.getProperName()%></h1>
+    <p class="filter"><a href="/admin/clients" class="btn btn-dark">Back to All Clients</a></p>
+   </div>
+   <div class="container">
+     <div class="row my-5">
+       <div class="col-md-4 lead border rounded py-3 p-md-5">
+          <div><strong>Name: </strong><%= client.getProperName() %></div>
+          <div><strong>Sex: </strong><%= client.sex %></div>
+          <div><strong>Phone Number: </strong><%= client.phoneNumber %></div>
+          <div><strong>Email Address: </strong><%= client.email %></div>
+          <div><strong>Age: </strong><%= Math.floor((new Date() - new Date(client.birthDate)) / 1000 / 60 / 60 / 24 / 365 )%></div>
+          <div><strong>Address: </strong><%= client.address %></div>
+          <div class="mt-2"><a class="btn btn-info" href="mailto:<%= client.email %>">Email <%= client.firstName %></a>  
+          </div>
+          <!-- left column is being closed below -->
+        </div>
+        <div class="col-md-7 offset-md-1 py-3 p-md-5">
+         <% if(client.prescriptions.length === 0){ %>
+          <p class="lead">This client does not have any prescription</p>
+         <% }else {%>
+          <p class="lead"><%=client.firstName.split('').map((char, i) => (i === 0 ? char.toUpperCase(): char)).join('')%>'s Prescriptions</p>
+          <% for(let prescription of client.prescriptions.reverse()){%>
+           <div class="border rounded my-2 p-2 d-flex justify-content-between">
+            <div class="d-flex flex-column">
+             <img class="thumbnail rounded" 
+             width="70px" height="70px" style="object-fit: cover" alt="prescription" src=<%= prescription.image.url %> >
+             <small><%= prescription.timeAgo() %></small>
+            </div>
+            <div class="d-flex flex-column justify-content-center">
+             <small>BP</small>
+             <span>
+             <%= prescription.bloodPressure ? prescription.bloodPressure : 'N/A' %>
+             </span>
+            </div>
+            <div class="d-flex flex-column justify-content-center">
+             <small>BG</small>
+             <span>
+              <%= prescription.glucoseLevel ? prescription.glucoseLevel : 'N/A' %>
+             </span>
+            </div>
+            <div class="d-flex flex-column justify-content-center">
+             <small>Status</small>
+             <%if(prescription.status === 'sent'){%>
+               Unhandled
+              <%}%>
+              <%if(prescription.status === 'quoted'){%>
+               Quoted
+              <%}%>
+              <%if(prescription.status === 'paid'){%>
+               Paid
+              <%}%>
+              <%if(prescription.status === 'fullfilled'){%>
+               Fullfilled
+              <%}%>
+              <%if(prescription.status === 'cancelled'){%>
+               Cancelled
+              <%}%>
+            </div>
+            <div class="d-flex flex-column justify-content-center">
+             <%if (prescription.archived){ %>
+              <span class="text-warning">Client Deleted</span><%}else{%> <span class="text-success">Client Availed</span><%}%>
+            </div>
+            <div class="d-flex flex-column justify-content-center">
+             <a href=<%=`/admin/clients/${prescription.clientId}/prescriptions/${prescription._id}`%>>View</a>
+            </div>
+          </div>
+          <% } %>
+        <% } %>
+        </div>
+      <!-- row is being closed below -->
+     </div>
+     <!-- container fluid is being closed below -->
+   </div>

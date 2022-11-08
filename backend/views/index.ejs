@@ -1,0 +1,42 @@
+<%- layout('template') %>
+    <title>Admin | Home</title>
+</head>
+<body class="d-flex flex-column min-vh-100">
+ <div class="hero-bar pt-5 px-3">
+  <% if(success && success.length){ %>
+   <div class="alert alert-success alert-dismissible fade show absolute-positioned" role="alert"><%= success %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+<% } %>
+
+<h1 class="text-uppercase"><img src="/images/logo-1.png" class="img-fluid" width="70"> | Clients Dashboard</h1>
+<p class="filter"><a  href="/admin/clients" <%- !archive ? `class="btn btn-light"` : `class="btn btn-dark"`  %>>All Clients</a>  <a  href="/admin/clients?archive=true" <%- archive ? `class="btn btn-light"` : `class="btn btn-dark"` %> >Archived</a></p>
+</div>
+<!-- container starts here -->
+  <div class="container-fluid mb-5"> 
+    <div class="row mb-0 py-2 bg-dark text-white d-none d-md-flex px-3">
+        <div class="col-md"><strong>Full Name</strong></div>
+        <div class="col-md-2 px-0"><strong>Sex</strong></div>
+        <div class="col-md-2 px-0"><strong>Phone </strong></div>
+        <div class="col-md-4"><strong>Email</strong></div>
+        <div class="col-md-1 px-0 text-right"><strong>Age</strong></div>
+        <div class="col-md-1 px-0"><strong>Action</strong></div>
+    </div>
+    <div class="striped">
+           <% if(!hasArchive){ %>
+            <p class="info">Archive is empty</p>
+        <% } %>
+        <% for(let client of clients) { %>
+         <div class="row py-4 py-md-2 my-0 px-3">
+          <div class="col-md-2 px-0" class="lead"><strong class="d-md-none d-inline">Name: </strong><a href="/admin/clients/<%= client._id %>"><%= client.getProperName() %></a></div>
+          <div class="col-md-2 px-0"><strong class="d-md-none d-inline">Sex: </strong><%= client.sex %></div>
+          <div class="col-md-2 px-0"><strong class="d-md-none d-inline">Phone: </strong><%= client.phoneNumber %></div>
+          <div class="col-md-4 px-0"><strong class="d-md-none d-inline">Email: </strong><%= client.email %></div>
+          <div class="col-md-1 px-0 text-right"><strong class="d-md-none d-inline">Age: </strong><%= Math.floor((new Date() - new Date(client.birthDate)) / 1000 / 60 / 60 / 24 / 365 )%></div>
+          <div class="col-md-1 px-0 mt-2 mt-md-0"><form method="POST" action="/admin/clients/<%= client._id %>?_do=PATCH">
+           <button class="btn btn-sm btn-warning"><%= client.archived ? 'Restore' : 'Archive' %></button>
+       </form></div>
+      </div>
+        <% } %>
+    </div>
+   

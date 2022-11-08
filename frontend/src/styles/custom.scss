@@ -1,0 +1,96 @@
+@import '../../node_modules/bootstrap/scss/functions';
+
+// $body-bg: #0b0c0e;
+// $body-color: #f5f5f5;
+$theme-colors: (
+  'primary': #fffb00,
+);
+
+@import '../../node_modules/bootstrap/scss/bootstrap.scss';
+
+.snap-btn {
+  width: 4rem;
+  height: 4rem;
+}
+.actions-strip {
+  background-color: rgba(0, 0, 0, 0.7) !important;
+}
+.show-actions {
+  width: 100%;
+  padding: 1px;
+  visibility: visible;
+}
+.hide-actions {
+  width: 1px;
+  height: 1px;
+  padding: 1px;
+  visibility: hidden;
+  overflow: hidden;
+}
+.hide-video {
+  height: 1px !important;
+  left: 100vw !important;
+  position: fixed !important;
+}
+.show-video {
+  width: 100% !important;
+  height: 100vh !important;
+}
+.thick-border {
+  border-width: 0.5rem;
+}
+input[type=text],
+input:not([type=radio]),
+input[type=email],
+textarea{
+  background-color: #4a4f58 !important;
+  border: none !important;
+  color:#aaa !important;
+}
+
+input[type=text]:focus,
+input:not([type=radio]):focus,
+input[type=email]:focus,
+textarea:focus {
+  background-color: #1e2328 !important;
+  outline: none !important;
+  color: #fff !important;
+}
+.invalid-feedback {
+  display: block !important;
+  color: theme-color('primary')
+}
+
+.lead {
+ font-size: 150%
+}
+
+.bg-black {
+ background-color: rgba(0, 0, 0, .08)!important;
+}
+
+.logout-button,
+.settings-button {
+ background: none !important;
+ outline: none;
+ border: none;
+ transform: none;
+}
+
+.btn-circle {
+ border-radius: 50%;
+ display: block;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ padding: 1rem;
+ font-weight: bold;
+ position: fixed;
+ left: 2rem;
+ bottom: 2rem;
+ box-shadow: 0 1.5rem 2rem rgba(0, 0, 0, 0.4);
+}
+
+.bg-secondary {
+ background-color: #4a4f58 !important;
+}
